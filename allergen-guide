@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allergen Introduction Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .handbook-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6B46C1, #F97316);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content-area {
+            display: flex;
+            min-height: 600px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+            padding: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: #e2e8f0;
+        }
+
+        .nav-item.active {
+            background: #6B46C1;
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-right: 12px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #FCD34D, #F97316);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .guide-description {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid #6B46C1;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .option-card:hover {
+            border-color: #6B46C1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(107, 70, 193, 0.15);
+        }
+
+        .option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .option-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .difficulty-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .easy { background: #dcfce7; color: #166534; }
+        .medium { background: #fef3c7; color: #92400e; }
+        .advanced { background: #fee2e2; color: #991b1b; }
+
+        .option-description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .option-details {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .nutrition-facts {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .nutrition-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0c4a6e;
+            margin-bottom: 15px;
+        }
+
+        .nutrition-list {
+            list-style: none;
+            space-y: 8px;
+        }
+
+        .nutrition-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #0c4a6e;
+        }
+
+        .nutrition-list li::before {
+            content: "✓";
+            color: #059669;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content-area {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="handbook-container">
+        <div class="header">
+            <h1>🥜 Allergen Introduction Handbook</h1>
+            <p>Safe, step-by-step guides for introducing common allergens to your baby</p>
+        </div>
+        
+        <div class="content-area">
+            <div class="sidebar">
+                <div class="nav-item active" onclick="showPage('wheat')">
+                    <span class="nav-icon">🌾</span>
+                    <span>Wheat</span>
+                </div>
+                <div class="nav-item" onclick="showPage('egg')">
+                    <span class="nav-icon">🥚</span>
+                    <span>Egg</span>
+                </div>
+                <div class="nav-item" onclick="showPage('peanut')">
+                    <span class="nav-icon">🥜</span>
+                    <span>Peanut</span>
+                </div>
+                <div class="nav-item" onclick="showPage('milk')">
+                    <span class="nav-icon">🥛</span>
+                    <span>Milk</span>
+                </div>
+                <div class="nav-item" onclick="showPage('fish')">
+                    <span class="nav-icon">🐟</span>
+                    <span>Fish</span>
+                </div>
+                <div class="nav-item" onclick="showPage('shellfish')">
+                    <span class="nav-icon">🦐</span>
+                    <span>Shellfish</span>
+                </div>
+                <div class="nav-item" onclick="showPage('soy')">
+                    <span class="nav-icon">🫘</span>
+                    <span>Soy</span>
+                </div>
+                <div class="nav-item" onclick="showPage('tree-nuts')">
+                    <span class="nav-icon">🌰</span>
+                    <span>Tree Nuts</span>
+                </div>
+                <div class="nav-item" onclick="showPage('sesame')">
+                    <span class="nav-icon">🫰</span>
+                    <span>Sesame</span>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <!-- Wheat Page -->
+                <div id="wheat" class="page active">
+                    <div class="page-header">
+                        <div class="page-icon">🌾</div>
+                        <div>
+                            <h2 class="page-title">Let's Try Wheat</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-description">
+                        <p>This guide will help you introduce wheat safely with alternating days - one day for feeding, one day for monitoring. Each feeding day gradually increases portions while rest days let you watch for any reactions.</p>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 20px; color: #1e293b;">Choose One Wheat Option</h3>
+                    
+                    <div class="options-grid">
+                        <div class="option-card">
+                            <div class="option-header">
+                                <div class="option-title">Iron-Rich Baby Cereal</div>
+                                <span class="difficulty-badge easy">Easy</span>
+                            </div>
+                            <div class="option-description">
+                                Mix cereal with warm breast milk/formula<br>
+                                Texture: smooth<br>
+                                Serve lukewarm<br>
+                                1 serving = 2 tablespoon
+                            </div>
+                            <div class="option-details">✓ Great first food ✓ Fortified with iron</div>
+                        </div>
+                        
+                        <div class="option-card">
+                            <div class="option-header">
+                                <div class="option-title">Tiny Pasta</div>
+                                <span class="difficulty-badge medium">6M+</span>
+                            </div>
+                            <div class="option-description">
+                                Well-cooked until soft<br>
+                                Cut into tiny pieces<br>
+                                Let baby self-feed<br>
+                                1 serving = 2 tablespoon
+                            </div>
+                            <div class="option-details">✓ Self-feeding practice ✓ Motor skills</div>
+                        </div>
+                        
+                        <div class="option-card">
+                            <div class="option-header">
+                                <div class="option-title">Cream of Wheat</div>
+                                <span class="difficulty-badge easy">Soon-ish</span>
+                            </div>
+                            <div class="option-description">
+                                Cook until very smooth<br>
+                                Mix with warm breastmilk/formula<br>
+                                Thin consistency<br>
+                                Serve lukewarm<br>
+                                1 serving = 2 tablespoon
+                            </div>
+                            <div class="option-details">✓ Smooth texture ✓ Easy to digest</div>
+                        </div>
+                        
+                        <div class="option-card">
+                            <div class="option-header">
+                                <div class="option-title">Toast Fingers</div>
+                                <span class="difficulty-badge medium">6M+</span>
+                            </div>
+                            <div class="option-description">
+                                2" x 3" strips (adult finger size)<br>
+                                Lightly toasted<br>
+                                Let baby self-feed<br>
+                                1 serving = 1 strip
+                            </div>
+                            <div class="option-details">✓ Self-feeding ✓ Teething relief</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nutrition-facts">
+                        <h4 class="nutrition-title">Wheat Nutritional Facts</h4>
+                        <ul class="nutrition-list">
+                            <li>Rich in complex carbohydrates for sustained energy</li>
+                            <li>Good source of B vitamins (B1, B3, and folate)</li>
+                            <li>Contains dietary fiber for digestive health</li>
+                            <li>Iron-fortified options support healthy development</li>
+                            <li>Protein content helps with growth and development</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Egg Page -->
+                <div id="egg" class="page">
+                    <div class="page-header">
+                        <div class="page-icon">🥚</div>
+                        <div>
+                            <h2 class="page-title">Let's Try Egg</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="guide-description">
+                        <p>This guide will help you introduce eggs safely with alternating days - one day for feeding, one day for monitoring. Each feeding day gradually increases portions while rest days let you watch for any reactions.</p>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 20px; color: #1e293b;">Choose One Egg Option</h3>
+                    
+                    <div class="options-grid">
+                        <div class="option-card">
+                            <div class="option-header">
+                                <div class="option-title">Iron-Rich Baby Cereal</div>
+                                <span class="difficulty-badge easy">Easy</span>
+                            </div>
+                            <div class="option-description">
+                                Mix cereal with warm breast milk/formula<br>
+                                Add 1 tsp scrambled egg<br>
+                                Serve lukewarm<br>
+                                1 serving = 2 tablespoon
+                            </div>
+                            <div class="option-details">✓ Familiar texture ✓ Easy to monitor</div>
+                        </div>
+                        
+                        <div class="option-card">
+                            <div class="option-header">
+                                <div class="option-title">Tiny Pasta</div>
+                                <span class="difficulty-badge medium">6M+</span>
+                            </div>
+                            <div class="option-description">
+                                Well-cooked until soft<br>
+                                Mix with scrambled egg<br>
+                                Let baby self-feed<br>
+                                1 serving = 2 tablespoon
+                            </div>
+                            <div class="option-details">✓ Combination feeding ✓ Motor skills</div>
+                        </div>
+                        
+                        <div class="option-card">
+                            <div class="option-header">
+                                <div class="option-title">Cream of Wheat</div>
+                                <span class="difficulty-badge easy">Soon-ish</span>
+                            </div>
+                            <div class="option-description">
+                                Cook until very smooth<br>
+                                Mix with warm breastmilk/formula<br>
+                                Add scrambled egg<br>
+                                Thin consistency<br>
+                                Serve lukewarm<br>
+                                1 serving = 2 tablespoon
+                            </div>
+                            <div class="option-details">✓ Smooth introduction ✓ Easy digestion</div>
+                        </div>
+                        
+                        <div class="option-card">
+                            <div class="option-header">
+                                <div class="option-title">Toast Fingers</div>
+                                <span class="difficulty-badge medium">6M+</span>
+                            </div>
+                            <div class="option-description">
+                                2" x 3" strips (adult finger size)<br>
+                                Lightly toasted<br>
+                                Top with scrambled egg<br>
+                                Let baby self-feed<br>
+                                1 serving = 1 strip
+                            </div>
+                            <div class="option-details">✓ Self-feeding ✓ Texture variety</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nutrition-facts">
+                        <h4 class="nutrition-title">Egg Nutritional Facts</h4>
+                        <ul class="nutrition-list">
+                            <li>Rich in complete protein for sustained energy</li>
+                            <li>Good source of choline (B1, B3, and folate)</li>
+                            <li>Contains dietary omega-3s for brain health</li>
+                            <li>Vitamin D content supports healthy development</li>
+                            <li>High-quality protein helps with growth and development</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Add more pages for other allergens -->
+                <div id="peanut" class="page">
+                    <div class="page-header">
+                        <div class="page-icon">🥜</div>
+                        <div>
+                            <h2 class="page-title">Let's Try Peanut</h2>
+                        </div>
+                    </div>
+                    <div class="guide-description">
+                        <p>Coming soon - Peanut introduction guide with safe preparation methods and monitoring guidelines.</p>
+                    </div>
+                </div>
+                
+                <!-- Placeholder pages for other allergens -->
+                <div id="milk" class="page">
+                    <div class="page-header">
+                        <div class="page-icon">🥛</div>
+                        <div><h2 class="page-title">Let's Try Milk</h2></div>
+                    </div>
+                    <div class="guide-description">
+                        <p>Coming soon - Dairy introduction guide.</p>
+                    </div>
+                </div>
+                
+                <div id="fish" class="page">
+                    <div class="page-header">
+                        <div class="page-icon">🐟</div>
+                        <div><h2 class="page-title">Let's Try Fish</h2></div>
+                    </div>
+                    <div class="guide-description">
+                        <p>Coming soon - Fish introduction guide.</p>
+                    </div>
+                </div>
+                
+                <div id="shellfish" class="page">
+                    <div class="page-header">
+                        <div class="page-icon">🦐</div>
+                        <div><h2 class="page-title">Let's Try Shellfish</h2></div>
+                    </div>
+                    <div class="guide-description">
+                        <p>Coming soon - Shellfish introduction guide.</p>
+                    </div>
+                </div>
+                
+                <div id="soy" class="page">
+                    <div class="page-header">
+                        <div class="page-icon">🫘</div>
+                        <div><h2 class="page-title">Let's Try Soy</h2></div>
+                    </div>
+                    <div class="guide-description">
+                        <p>Coming soon - Soy introduction guide.</p>
+                    </div>
+                </div>
+                
+                <div id="tree-nuts" class="page">
+                    <div class="page-header">
+                        <div class="page-icon">🌰</div>
+                        <div><h2 class="page-title">Let's Try Tree Nuts</h2></div>
+                    </div>
+                    <div class="guide-description">
+                        <p>Coming soon - Tree nuts introduction guide.</p>
+                    </div>
+                </div>
+                
+                <div id="sesame" class="page">
+                    <div class="page-header">
+                        <div class="page-icon">🫰</div>
+                        <div><h2 class="page-title">Let's Try Sesame</h2></div>
+                    </div>
+                    <div class="guide-description">
+                        <p>Coming soon - Sesame introduction guide.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Remove active class from all nav items
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Add active class to clicked nav item
+            event.target.closest('.nav-item').classList.add('active');
+        }
+        
+        // Add click handlers to option cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const optionCards = document.querySelectorAll('.option-card');
+            optionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove active state from all cards
+                    optionCards.forEach(c => c.style.borderColor = '#e2e8f0');
+                    
+                    // Add active state to clicked card
+                    this.style.borderColor = '#6B46C1';
+                    this.style.background = '#f8fafc';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
